@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 /* 定义topic模型结构 */
 const topicSchema = new mongoose.Schema({
+  // 音乐url
+  musicUrl: {
+    type: String,
+    readonly: true,
+  },
   // 话题名称
   topicName: {
     type: String,

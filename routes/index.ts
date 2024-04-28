@@ -9,6 +9,10 @@ import topic from "./topic";
 import question from "./question";
 import answer from "./answer";
 import comment from "./comment";
+import music from "./music";
+
+/** 音乐api */
+router.use("/music", music)
 
 /* 用户api */
 router.use("/user", user);

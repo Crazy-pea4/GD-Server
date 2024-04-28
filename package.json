@@ -5,14 +5,15 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./app.ts",
-    "compile": "tsc"
+    "compile": "tsc",
+    "activeDB": "mongod --dbpath=D:/db"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "cos-nodejs-sdk-v5": "^2.11.16",
+    "cos-nodejs-sdk-v5": "^2.13.5",
     "express": "^4.18.1",
     "joi": "^17.6.1",
     "jsonwebtoken": "^8.5.1",

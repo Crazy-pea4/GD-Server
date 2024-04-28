@@ -6,7 +6,7 @@ export default {
   },
   // 数据库url
   database: {
-    url: process.env.MONGODB || "mongodb://127.0.0.1:27017/Blog",
+    url: process.env.MONGODB || "mongodb://127.0.0.1:27017/MusicShared",
   },
   // javaWebToken
   jwt: {

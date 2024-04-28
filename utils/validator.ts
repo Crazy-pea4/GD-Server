@@ -79,6 +79,10 @@ export function authLoginValidator(data: authLoginData) {
 // 话题创建校验器
 export function topicCreateValidator(data: topicCreateData) {
   const schema = Joi.object({
+    musicUrl: Joi.string().required().messages({
+      "any.required": "缺少必选参数 musicUrl",
+      "string.base": "musicUrl 类型错误 需要为string",
+    }),
     topicName: Joi.string().max(20).required().messages({
       "any.required": "缺少必选参数 topicName",
       "string.base": "topicName 类型错误 需要为string",

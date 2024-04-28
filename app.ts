@@ -10,7 +10,7 @@ import cors from "cors";
 import morgan from "morgan";
 
 /* 引入数据库 */
-// import "./model/index";
+import "./model/index";
 
 const app = express();
 
