@@ -10,7 +10,7 @@ import cors from "cors";
 import morgan from "morgan";
 
 /* 引入数据库 */
-import "./model/index";
+// import "./model/index";
 
 const app = express();
 
@@ -34,7 +34,7 @@ app.use("/api", routes);
 app.use(errorHandler);
 
 app.get("/", (req, res) => {
-  res.send("ok");
+  res.send({'data': 'hello'});
 });
 
 app.post("/", (req, res) => {
