@@ -23,7 +23,7 @@ const userController: UserController = {
   // 注册
   register: async (req, res, next) => {
     try {
-      let { phoneNumber, nickname, password, gender, introduction, area } =
+      let { phoneNumber, nickname, password, introduction } =
         req.body;
       // 查询数据库，以phoneNumber为唯一标识
       // 若找到则已被注册
@@ -40,9 +40,7 @@ const userController: UserController = {
           phoneNumber,
           nickname,
           password,
-          gender,
           introduction,
-          area,
         });
         res.status(200).json({
           code: 200,

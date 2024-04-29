@@ -28,23 +28,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
-  // 性别
-  gender: {
-    type: String,
-    enum: ["male", "female", "unknown"],
-    default: "unknown",
-    select: false,
-  },
   // 自我介绍
   introduction: {
     type: String,
     default: "这个人很懒，没有留下介绍。。。",
-    select: false,
-  },
-  // 工作领域
-  area: {
-    type: [{ type: String }],
-    default: [],
     select: false,
   },
   // 关注列表

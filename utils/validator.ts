@@ -38,16 +38,9 @@ export function userRegisterValidator(data: userRegisterData) {
     avatarUrl: Joi.string().messages({
       "string.base": "avatarUrl 类型错误 需要为string",
     }),
-    gender: Joi.valid("male", "female", "unknown").default("female").messages({
-      "any.only": "性别只有male female unknown三种值",
-    }),
     introduction: Joi.string().messages({
       "string.base": "introduction 类型错误 需要为string",
-    }),
-    area: Joi.array().max(5).messages({
-      "array.base": "area 类型错误",
-      "array.max": "area 长度不可超过5",
-    }),
+    })
   });
 
   return schema.validate(data);
