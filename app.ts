@@ -22,7 +22,7 @@ app.use(express.json());
 // 处理跨域
 app.use(cors());
 // 处理日志 for nodejs
-app.use(morgan("dev"));
+app.use(morgan("common"));
 
 /* 配置静态资源文件夹（静态资源文件夹不需要在url中显示） */
 app.use(express.static("public"));

@@ -11,4 +11,6 @@ router.get("/", musicController.getMusicList)
 
 router.post("/upload", upload.single("file"), musicController.upload);
 
+router.post("/uploadCloud", musicController.uploadCloud);
+
 export default router

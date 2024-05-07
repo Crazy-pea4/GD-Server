@@ -56,7 +56,7 @@ export function authLoginValidator(data: authLoginData) {
       "string.max": "phoneNumber 必须是11位",
     }),
     password: Joi.string()
-      .pattern(/^[a-zA-Z0-9]{6,16}$/)
+      // .pattern(/^[a-zA-Z0-9]{6,16}$/)
       .required()
       .messages({
         "any.required": "缺少必选参数 password",
