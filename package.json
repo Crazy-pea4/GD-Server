@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon ./app.ts",
     "compile": "tsc",
-    "activeDB": "mongod --dbpath=D:/db"
+    "activeDB": "mongod --dbpath=D:/Design/db"
   },
   "keywords": [],
   "author": "",
