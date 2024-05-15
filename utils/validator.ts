@@ -72,9 +72,9 @@ export function authLoginValidator(data: authLoginData) {
 // 话题创建校验器
 export function topicCreateValidator(data: topicCreateData) {
   const schema = Joi.object({
-    musicUrl: Joi.string().required().messages({
-      "any.required": "缺少必选参数 musicUrl",
-      "string.base": "musicUrl 类型错误 需要为string",
+    musicId: Joi.string().required().messages({
+      "any.required": "缺少必选参数 musicId",
+      "string.base": "musicId 类型错误 需要为string",
     }),
     topicName: Joi.string().max(20).required().messages({
       "any.required": "缺少必选参数 topicName",
@@ -84,10 +84,9 @@ export function topicCreateValidator(data: topicCreateData) {
     topicPic: Joi.string().messages({
       "string.base": "topicPic 类型错误 需要为string",
     }),
-    topicIntroduction: Joi.string().max(200).required().messages({
+    topicIntroduction: Joi.string().required().messages({
       "any.required": "缺少必选参数 topicIntroduction",
       "string.base": "topicIntroduction 类型错误 需要为string",
-      "string.max": "topicIntroduction 不能大于200位",
     }),
     createdAt: Joi.string().required().messages({
       "any.required": "缺少必选参数 createdAt",

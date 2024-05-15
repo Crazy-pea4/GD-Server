@@ -9,6 +9,7 @@ export default function (validator: Validator): RequestHandler {
     const { error, value } = validator(req.body);
     // console.log(value);
     if (error) {
+      console.log('error result: ', error);
       return res.status(400).json({
         code: 400,
         value: error._original,

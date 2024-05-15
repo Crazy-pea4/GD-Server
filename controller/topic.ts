@@ -4,6 +4,7 @@ import TopicController from "../@types/controller/topic";
 /* 引入topic模型 */
 import topicModel from "../model/topic";
 import questionModel from "../model/question";
+import musicModel from "../model/music";
 
 /* 引入工具 */
 import handelResponse from "../utils/handelResponse";
@@ -17,16 +18,8 @@ const topicController: TopicController = {
        * 2. 若不存在则创建话题
        */
       const info = req.body;
-      const topic = await topicModel.findOne({ topicName: info.topicName });
-      if (!topic) {
-        const result = await topicModel.create(info);
-        handelResponse(res, result, info);
-      } else
-        res.status(400).json({
-          code: 400,
-          message: "话题已存在",
-          data: info,
-        });
+      const result = await topicModel.create(info);
+      handelResponse(res, result, info);
     } catch (err) {
       next(err);
     }
@@ -55,7 +48,12 @@ const topicController: TopicController = {
         .find({ topicName: new RegExp(keyword as string, "i") })
         .limit(limit)
         .skip(page * limit);
-      handelResponse(res, topicList);
+      const List = topicList.map(async (item) => {
+        const res = await musicModel.findById(item.musicId)
+        return {...item.toObject(), musicAuthor: res?.author}
+      });
+      const finalList = await Promise.all(List)
+      handelResponse(res, finalList);
     } catch (err) {
       next(err);
     }

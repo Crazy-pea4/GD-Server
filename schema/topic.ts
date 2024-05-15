@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 /* 定义topic模型结构 */
 const topicSchema = new mongoose.Schema({
-  // 音乐url
-  musicUrl: {
+  // 音乐Id
+  musicId: {
     type: String,
     readonly: true,
   },
@@ -22,8 +22,6 @@ const topicSchema = new mongoose.Schema({
   topicIntroduction: {
     type: String,
     required: true,
-    maxLength: 200,
-    select: false,
   },
   // 话题粉丝
   topicFollowers: {
