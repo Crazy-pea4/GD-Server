@@ -11,7 +11,6 @@ const questionSchema = new mongoose.Schema({
   // 描述
   descriptions: {
     type: String,
-    required: true,
     maxLength: 500,
   },
   // 提出问题者
@@ -19,7 +18,6 @@ const questionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
-    select: false,
   },
   isCollected: {
     type: Boolean,

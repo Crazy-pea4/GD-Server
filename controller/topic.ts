@@ -5,6 +5,7 @@ import TopicController from "../@types/controller/topic";
 import topicModel from "../model/topic";
 import questionModel from "../model/question";
 import musicModel from "../model/music";
+import userModel from "../model/user";
 
 /* 引入工具 */
 import handelResponse from "../utils/handelResponse";
@@ -19,7 +20,7 @@ const topicController: TopicController = {
        */
       const info = req.body;
       const result = await topicModel.create(info);
-      handelResponse(res, result, info);
+      handelResponse(res, result, '创建话题成功');
     } catch (err) {
       next(err);
     }
@@ -49,10 +50,10 @@ const topicController: TopicController = {
         .limit(limit)
         .skip(page * limit);
       const List = topicList.map(async (item) => {
-        const res = await musicModel.findById(item.musicId)
-        return {...item.toObject(), musicAuthor: res?.author}
+        const res = await musicModel.findById(item.musicId);
+        return { ...item.toObject(), musicAuthor: res?.author };
       });
-      const finalList = await Promise.all(List)
+      const finalList = await Promise.all(List);
       handelResponse(res, finalList);
     } catch (err) {
       next(err);
@@ -94,7 +95,14 @@ const topicController: TopicController = {
     try {
       const id = req.params.id;
       const questions = await questionModel.find({ topics: id });
-      handelResponse(res, questions);
+      const List = questions.map(async (question) => {
+        console.log(question?.questioner);
+        
+        const questioner = await userModel.findById(question?.questioner);
+        return { ...question.toObject(), questioner };
+      });
+      const finalList = await Promise.all(List);
+      handelResponse(res, finalList);
     } catch (err) {
       next(err);
     }

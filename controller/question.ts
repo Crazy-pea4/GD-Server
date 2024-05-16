@@ -21,7 +21,7 @@ const questionController: QuestionController = {
       info.questioner = value;
       // 新建问题，问题可以重复
       const result = await questionModel.create(info);
-      handelResponse(res, result, info);
+      handelResponse(res, result, '创建评论成功');
     } catch (err) {
       next(err);
     }
