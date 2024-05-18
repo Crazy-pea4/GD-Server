@@ -28,6 +28,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  // 用户个人录音列表
+  recordList: {
+    type: [{ type: {
+      name: String,
+      url: String,
+    } }],
+  },
+  // 用户喜欢音乐列表
+  likedMusicList: {
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Music" }],
+    select: false,
+  },
   // 自我介绍
   introduction: {
     type: String,

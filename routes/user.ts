@@ -27,6 +27,15 @@ router.patch("/:id", authenticate, checkExisted.user, userController.editUser);
 // 注销
 router.delete("/:id", authenticate, checkExisted.user, userController.logOff);
 
+// 获取用户录音列表
+router.get("/:id/record", authenticate, userController.getRecordList)
+
+// 喜欢音乐
+router.post("/:id/music", authenticate, userController.likeMusic)
+
+// 获取用户喜欢音乐列表
+router.get("/:id/music", authenticate, userController.getLikeMusicList)
+
 // 关注（id为被关注人的id）
 router.put(
   "/following/:id",

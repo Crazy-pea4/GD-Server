@@ -9,8 +9,8 @@ import userModel from "../model/user";
 import config from "../config/index";
 
 const cos = new Cos({
-  SecretId: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  SecretKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  SecretId: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  SecretKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 });
 
 const uploadController: UploadController = {
@@ -22,7 +22,7 @@ const uploadController: UploadController = {
       // 查询用户先前是否已经上传过头像
       cos.getBucket(
         {
-          Bucket: "blog-user-avatar-1308742510",
+          Bucket: "userinfo-1308742510",
           Region: "ap-guangzhou",
           Prefix: id,
         },
@@ -37,7 +37,7 @@ const uploadController: UploadController = {
           if (data.Contents[0]) {
             cos.deleteObject(
               {
-                Bucket: "blog-user-avatar-1308742510",
+                Bucket: "userinfo-1308742510",
                 Region: "ap-guangzhou",
                 Key: data.Contents[0].Key,
               },
@@ -56,7 +56,7 @@ const uploadController: UploadController = {
       const Key = `${id}_${Date.now()}_avatar.jpg`;
       // 确保将用户的先前头像删除完毕，再添加新头像
       cos.uploadFile({
-        Bucket: "blog-user-avatar-1308742510",
+        Bucket: "userinfo-1308742510",
         Region: "ap-guangzhou",
         Key,
         FilePath: filepath,

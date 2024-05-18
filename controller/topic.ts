@@ -96,8 +96,6 @@ const topicController: TopicController = {
       const id = req.params.id;
       const questions = await questionModel.find({ topics: id });
       const List = questions.map(async (question) => {
-        console.log(question?.questioner);
-        
         const questioner = await userModel.findById(question?.questioner);
         return { ...question.toObject(), questioner };
       });

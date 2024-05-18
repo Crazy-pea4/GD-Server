@@ -9,7 +9,7 @@ import upload from "../middleware/upload";
 
 router.get("/", musicController.getMusicList)
 
-router.post("/upload", upload.single("file"), musicController.upload);
+router.post("/:id/upload", upload.single("file"), musicController.upload);
 
 router.post("/uploadCloud", musicController.uploadCloud);
 

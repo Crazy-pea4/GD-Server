@@ -6,6 +6,9 @@ export default interface UserController {
   getUser: RequestHandler;
   editUser: RequestHandler;
   logOff: RequestHandler;
+  getRecordList: RequestHandler;
+  likeMusic: RequestHandler;
+  getLikeMusicList: RequestHandler;
   follow: RequestHandler;
   unfollow: RequestHandler;
   getFollowing: RequestHandler;

@@ -23,6 +23,7 @@ const authController: AuthController = {
             code: 200,
             message: "登陆成功",
             token: Jwt.sign(_id),
+            userId: _id,
             data,
           });
         } else {

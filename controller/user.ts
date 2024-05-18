@@ -14,6 +14,8 @@ import handelResponse from "../utils/handelResponse";
 
 // 引入Tencent Cos对象存储服务包
 import Cos from "cos-nodejs-sdk-v5";
+import musicModel from "../model/music";
+import mongoose from "mongoose";
 const cos = new Cos({
   SecretId: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
   SecretKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -23,8 +25,7 @@ const userController: UserController = {
   // 注册
   register: async (req, res, next) => {
     try {
-      let { phoneNumber, nickname, password, introduction } =
-        req.body;
+      let { phoneNumber, nickname, password, introduction } = req.body;
       // 查询数据库，以phoneNumber为唯一标识
       // 若找到则已被注册
       if (await userModel.findOne({ phoneNumber })) {
@@ -134,6 +135,73 @@ const userController: UserController = {
       );
       const user = await userModel.findByIdAndDelete(id);
       handelResponse(res, user);
+    } catch (err) {
+      next(err);
+    }
+  },
+  // 获取用户录音列表
+  getRecordList: async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const result = await userModel.findById(id);
+      handelResponse(res, result?.recordList);
+    } catch (err) {
+      next(err);
+    }
+  },
+  // 喜欢音乐
+  likeMusic: async (req, res, next) => {
+    // 喜欢的音乐id
+    const id = req.params.id;
+    // 用户id
+    const token = req.headers.token as string;
+    const { value } = Jwt.verify(token);
+
+    const music = await musicModel.findById(id).select("+likesList");
+
+    console.log(music?.likesList, value);
+
+    if (music?.likesList.includes(value)) {
+      // 若已经喜欢了。删除用户数据模型的保存的喜欢者id
+      await userModel.updateOne(
+        { _id: value },
+        {
+          $pull: { likedMusicList: id },
+        }
+      );
+      await musicModel.updateOne(
+        { _id: id },
+        {
+          $pull: { likesList: value },
+        }
+      );
+      handelResponse(res, {}, "取消喜欢成功");
+    } else {
+      // 列表中没有喜欢者id
+      await userModel.updateOne(
+        { _id: value },
+        {
+          $addToSet: { likedMusicList: id },
+        }
+      );
+      await musicModel.updateOne(
+        { _id: id },
+        {
+          $addToSet: { likesList: value },
+        }
+      );
+      handelResponse(res, {}, "喜欢音乐");
+    }
+  },
+  // 获取用户喜欢音乐列表
+  getLikeMusicList: async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const likedMusicList = await userModel
+        .findById(id)
+        .select("+likedMusicList")
+        .populate("likedMusicList");
+      handelResponse(res, likedMusicList?.likedMusicList);
     } catch (err) {
       next(err);
     }
