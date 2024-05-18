@@ -10,8 +10,8 @@ import userModel from "../model/user";
 import Cos from "cos-nodejs-sdk-v5";
 
 const cos = new Cos({
-  SecretId: "xxxxxxxxxxxxxxxxxxxxxxxxxx",
-  SecretKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  SecretId: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  SecretKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 });
 
 /** 引入工具 */

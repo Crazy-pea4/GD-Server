@@ -10,7 +10,7 @@ import config from "../config/index";
 
 const cos = new Cos({
   SecretId: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  SecretKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  SecretKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 });
 
 const uploadController: UploadController = {
@@ -19,40 +19,42 @@ const uploadController: UploadController = {
     if (req.file) {
       // const filepath = `public/uploads/${req.file.originalname}`; 服务器
       const filepath = `${config.app.baseUrl}/public/uploads/${req.file.originalname}`;
+      console.log(filepath, req.file);
+      
       // 查询用户先前是否已经上传过头像
-      cos.getBucket(
-        {
-          Bucket: "userinfo-1308742510",
-          Region: "ap-guangzhou",
-          Prefix: id,
-        },
-        (err, data) => {
-          if (err) {
-            res.status(500).json({
-              code: 500,
-              message: err.message,
-            });
-          }
-          // 若用户存在之前上传过的图片，删除掉再添加新的
-          if (data.Contents[0]) {
-            cos.deleteObject(
-              {
-                Bucket: "userinfo-1308742510",
-                Region: "ap-guangzhou",
-                Key: data.Contents[0].Key,
-              },
-              (err, data) => {
-                if (err) {
-                  res.status(500).json({
-                    code: 500,
-                    message: err.message,
-                  });
-                }
-              }
-            );
-          }
-        }
-      );
+      // cos.getBucket(
+      //   {
+      //     Bucket: "userinfo-1308742510",
+      //     Region: "ap-guangzhou",
+      //     Prefix: id,
+      //   },
+      //   (err, data) => {
+      //     if (err) {
+      //       res.status(500).json({
+      //         code: 500,
+      //         message: err.message,
+      //       });
+      //     }
+      //     // 若用户存在之前上传过的图片，删除掉再添加新的
+      //     if (data.Contents[0]) {
+      //       cos.deleteObject(
+      //         {
+      //           Bucket: "userinfo-1308742510",
+      //           Region: "ap-guangzhou",
+      //           Key: data.Contents[0].Key,
+      //         },
+      //         (err, data) => {
+      //           if (err) {
+      //             res.status(500).json({
+      //               code: 500,
+      //               message: err.message,
+      //             });
+      //           }
+      //         }
+      //       );
+      //     }
+      //   }
+      // );
       const Key = `${id}_${Date.now()}_avatar.jpg`;
       // 确保将用户的先前头像删除完毕，再添加新头像
       cos.uploadFile({
@@ -60,10 +62,10 @@ const uploadController: UploadController = {
         Region: "ap-guangzhou",
         Key,
         FilePath: filepath,
-        Headers: {
-          // 通过 imageMogr2 接口使用图片缩放功能：指定图片宽度为 256，宽度等比压缩
-          "Pic-Operations": `{"is_pic_info": 1, "rules": [{"fileid": "${Key}", "rule": "imageMogr2/thumbnail/256x/"}]}`,
-        },
+        // Headers: {
+        //   // 通过 imageMogr2 接口使用图片缩放功能：指定图片宽度为 256，宽度等比压缩
+        //   "Pic-Operations": `{"is_pic_info": 1, "rules": [{"fileid": "${Key}", "rule": "imageMogr2/thumbnail/256x/"}]}`,
+        // },
         onFileFinish: async function (err, data, options) {
           if (err) {
             res.status(500).json({ code: 500, message: err });

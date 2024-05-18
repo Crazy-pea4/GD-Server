@@ -144,7 +144,7 @@ const userController: UserController = {
     try {
       const id = req.params.id;
       const result = await userModel.findById(id);
-      handelResponse(res, result?.recordList);
+      handelResponse(res, {author: result?.nickname, picUrl: result?.avatarUrl, recordList: result?.recordList});
     } catch (err) {
       next(err);
     }
